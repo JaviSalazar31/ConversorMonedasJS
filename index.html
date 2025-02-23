@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertidor de Monedas</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Pantalla de Bienvenida -->
+    <div id="splashScreen">
+        <img src="./Images/logo.png" alt="Logo del Convertidor" class="splash-logo">
+        <h2 class="splash-text">Bienvenido a Conversor Monedas JS</h2>
+    </div>
+
+    <!-- Barra de Navegación -->
+    <nav class="navbar">
+        <a href="#mainContent">Inicio</a>
+        <a href="#about">Sobre Nosotros</a>
+        <a href="#contact">Contáctanos</a>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container" id="mainContent" style="display:none;">
+        <img src="./Images/logo.png" alt="Logo del Convertidor" class="logo">
+        <h1>Convertidor de Monedas</h1>
+        <div class="converter">
+            <div class="converter-group">
+                <label for="fromCurrency">Desde la Divisa</label>
+                <select id="fromCurrency"></select>
+            </div>
+            <input type="number" id="amount" placeholder="Cantidad">
+            <div class="converter-group">
+                <label for="toCurrency">A la Divisa</label>
+                <select id="toCurrency"></select>
+            </div>
+            <button id="convertBtn">Convertir</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <!-- Sección Sobre Nosotros -->
+    <section id="about" class="fade-in">
+        <h2>Sobre Nosotros</h2>
+        <p>Somos un equipo dedicado a brindar soluciones de conversión de monedas y criptomonedas, ayudando a usuarios a mantenerse actualizados con tasas de cambio precisas.</p>
+    </section>
+
+    <!-- Sección Contáctanos -->
+    <section id="contact" class="fade-in">
+        <h2>Contáctanos</h2>
+        <form id="contactForm">
+            <input type="text" placeholder="Tu Nombre" required>
+            <input type="email" placeholder="Tu Correo" required>
+            <textarea placeholder="Tu Mensaje" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Botón Ir Arriba -->
+    <button id="scrollTopBtn">↑</button>
+
+    <!-- Pie de Página -->
+    <footer>
+        <p>&copy; 2024 ConversorMonedasJS. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="#"><img src="./Images/logofacebook.png" alt="Facebook"></a>
+            <a href="#"><img src="./Images/logotwitter.png" alt="Twitter"></a>
+            <a href="#"><img src="./Images/logolinkedin.png" alt="LinkedIn"></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Animación de pantalla de bienvenida
+        window.addEventListener('load', () => {
+            const splashText = document.querySelector('.splash-text');
+            splashText.style.opacity = '0';
+
+            setTimeout(() => {
+                splashText.style.transition = 'opacity 1s ease-in';
+                splashText.style.opacity = '1';
+            }, 500);
+
+            setTimeout(() => {
+                document.getElementById('splashScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('splashScreen').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                }, 500);
+            }, 3000);
+        });
+
+        // Simulación de formulario de contacto
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            Swal.fire('¡Gracias!', 'Tu mensaje ha sido enviado.', 'success');
+            e.target.reset();
+        });
+
+        // Mostrar/Ocultar botón de subir
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                scrollTopBtn.style.display = 'block';
+            } else {
+                scrollTopBtn.style.display = 'none';
+            }
+        });
+
+        // Ir arriba al hacer clic en el botón
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Animación de las secciones al hacer scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
