@@ -3,10 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convertidor de Monedas</title>
+    <title>Conversor de Monedas</title>
+
+    <!-- ✅ Estilos CSS Personalizados -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- ✅ jQuery (Debe ir antes de Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- ✅ Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- ✅ Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- ✅ Librería SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- ✅ EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("hZDzllpEW01n77f76"); // Reemplaza con tu Public Key de EmailJS
+        })();
+    </script>
+
+    <!-- ✅ Tippy.js para Tooltips -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
 </head>
+
 <body>
     <!-- Pantalla de Bienvenida -->
     <div id="splashScreen">
@@ -19,111 +46,92 @@
         <a href="#mainContent">Inicio</a>
         <a href="#about">Sobre Nosotros</a>
         <a href="#contact">Contáctanos</a>
+        <button id="themeToggle" data-tippy-content="Cambia el Modo Oscuro/Claro">🌙 Modo Oscuro</button>
     </nav>
 
     <!-- Contenido Principal -->
     <div class="container" id="mainContent" style="display:none;">
         <img src="./Images/logoConversorMonedasJS.png" alt="Logo del Convertidor" class="logo">
-        <h1>Convertidor de Monedas</h1>
+        <h1>Conversor de Monedas</h1>
         <div class="converter">
             <div class="converter-group">
                 <label for="fromCurrency">Desde la Divisa</label>
                 <select id="fromCurrency"></select>
             </div>
-            <input type="number" id="amount" placeholder="Cantidad">
+
+            <button id="invertBtn" data-tippy-content="Invierte las monedas seleccionadas">↔️ Invertir</button>
+
             <div class="converter-group">
                 <label for="toCurrency">A la Divisa</label>
                 <select id="toCurrency"></select>
             </div>
-            <button id="convertBtn">Convertir</button>
+
+            <input type="number" id="amount" placeholder="Cantidad">
+            <button id="convertBtn" data-tippy-content="Haz clic para convertir">Convertir</button>
+            <div id="conversionCount">🔢 Total de conversiones: 0</div>
+            <div id="loader" class="hidden">🔄 Cargando...</div>
+            <div id="result"></div>
+            <div id="lastUpdate"></div>
         </div>
-        <div id="result"></div>
+
+        <!-- Historial de Conversiones -->
+        <h2>📊 Historial de Conversiones</h2>
+        <table id="history" class="history-table">
+            <thead>
+                <tr>
+                    <th>Desde</th>
+                    <th>A</th>
+                    <th>Cantidad</th>
+                    <th>Resultado</th>
+                    <th>Fecha/Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
     </div>
 
     <!-- Sección Sobre Nosotros -->
-    <section id="about" class="fade-in">
+    <section id="about" class="fade-in section-box">
         <h2>Sobre Nosotros</h2>
         <p>Somos un equipo dedicado a brindar soluciones de conversión de monedas y criptomonedas, ayudando a usuarios a mantenerse actualizados con tasas de cambio precisas.</p>
     </section>
 
     <!-- Sección Contáctanos -->
-    <section id="contact" class="fade-in">
+    <section id="contact" class="fade-in section-box">
         <h2>Contáctanos</h2>
         <form id="contactForm">
-            <input type="text" placeholder="Tu Nombre" required>
-            <input type="email" placeholder="Tu Correo" required>
-            <textarea placeholder="Tu Mensaje" required></textarea>
+            <input type="text" id="name" placeholder="Tu Nombre" required>
+            <input type="email" id="email" placeholder="Tu Correo" required>
+            <textarea id="message" placeholder="Tu Mensaje" required></textarea>
             <button type="submit">Enviar</button>
         </form>
     </section>
 
     <!-- Botón Ir Arriba -->
-    <button id="scrollTopBtn">↑</button>
+    <button id="scrollTopBtn" data-tippy-content="Haz clic para volver arriba">↑</button>
 
     <!-- Pie de Página -->
     <footer>
         <p>&copy; 2024 ConversorMonedasJS. Todos los derechos reservados.</p>
         <div class="social-icons">
-            <a href="#"><img src="./Images/logofacebook.png" alt="Facebook"></a>
-            <a href="#"><img src="./Images/logotwitter.png" alt="Twitter"></a>
-            <a href="#"><img src="./Images/logolinkedin.png" alt="LinkedIn"></a>
+            <a href="#" data-tippy-content="Visítanos en Facebook"><img src="./Images/logofacebook.png" alt="Facebook"></a>
+            <a href="#" data-tippy-content="Síguenos en Twitter"><img src="./Images/logotwitter.png" alt="Twitter"></a>
+            <a href="#" data-tippy-content="Conéctate en LinkedIn"><img src="./Images/logolinkedin.png" alt="LinkedIn"></a>
         </div>
     </footer>
 
+    <!-- ✅ Script Principal -->
     <script src="script.js"></script>
+
+    <!-- ✅ Inicialización de Tippy.js -->
     <script>
-        // Animación de pantalla de bienvenida
-        window.addEventListener('load', () => {
-            const splashText = document.querySelector('.splash-text');
-            splashText.style.opacity = '0';
-
-            setTimeout(() => {
-                splashText.style.transition = 'opacity 1s ease-in';
-                splashText.style.opacity = '1';
-            }, 500);
-
-            setTimeout(() => {
-                document.getElementById('splashScreen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('splashScreen').style.display = 'none';
-                    document.getElementById('mainContent').style.display = 'block';
-                }, 500);
-            }, 3000);
+        tippy('[data-tippy-content]', {
+            animation: 'scale',
+            duration: 200,
         });
-
-        // Simulación de formulario de contacto
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            Swal.fire('¡Gracias!', 'Tu mensaje ha sido enviado.', 'success');
-            e.target.reset();
-        });
-
-        // Mostrar/Ocultar botón de subir
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 200) {
-                scrollTopBtn.style.display = 'block';
-            } else {
-                scrollTopBtn.style.display = 'none';
-            }
-        });
-
-        // Ir arriba al hacer clic en el botón
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Animación de las secciones al hacer scroll
-        const fadeElements = document.querySelectorAll('.fade-in');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        fadeElements.forEach(el => observer.observe(el));
     </script>
+
 </body>
 </html>

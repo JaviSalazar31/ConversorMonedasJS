@@ -1,140 +1,118 @@
+/* Estilos Generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    scroll-behavior: smooth;
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header, nav, footer {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#convertBtn {
+    background-color: #28a745;
+    color: white;
+}
+
+#themeToggle {
+    background-color: #6c757d;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Modo Oscuro */
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-mode header, .dark-mode nav, .dark-mode footer {
+    background-color: #1e1e1e;
+}
+
+.dark-mode button {
+    background-color: #444;
+    color: #fff;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    .converter {
+        padding: 1rem;
+    }
+
+    input, select, button {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
+/* Loader */
+#loader {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.2rem;
 }
 
 /* Pantalla de Bienvenida */
 #splashScreen {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    background-color: #1e90ff;
+    height: 100vh;
+    background-color: #007bff;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
-    z-index: 10;
-    transition: opacity 0.5s ease-out;
+    z-index: 1000;
 }
 
 .splash-logo {
     width: 150px;
-    margin-bottom: 20px;
 }
 
 .splash-text {
-    font-size: 24px;
-    opacity: 0;
-}
-
-/* Barra de Navegación */
-.navbar {
-    background-color: #1e90ff;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    position: sticky;
-    top: 0;
-    z-index: 5;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.navbar a:hover {
-    text-decoration: underline;
-}
-
-.container {
-    width: 80%;
-    margin: 50px auto;
-    text-align: center;
-}
-
-.logo {
-    width: 120px;
-    margin-bottom: 20px;
-}
-
-h1 {
-    margin-bottom: 20px;
-}
-
-.converter {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 10px;
-}
-
-.converter-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.converter-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-select, input, button, textarea {
-    padding: 10px;
-    font-size: 16px;
-}
-
-#result {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 1.5rem;
+    animation: fadeIn 2s ease-in-out;
 }
 
-button {
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #187bcd;
-}
-
-/* Secciones Sobre Nosotros y Contáctanos */
-section {
-    padding: 40px;
-    background-color: #ffffff;
-    margin: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s ease-out;
-}
-
-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-form input, form textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form button {
-    width: 100%;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* Botón Ir Arriba */
@@ -142,40 +120,288 @@ form button {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #1e90ff;
+    background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 10px;
     border-radius: 50%;
     cursor: pointer;
     display: none;
-    font-size: 18px;
 }
 
-#scrollTopBtn:hover {
-    background-color: #187bcd;
+#scrollTopBtn.show {
+    display: block;
 }
 
-/* Pie de Página */
-footer {
-    background-color: #1e90ff;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-}
-
-footer p {
-    margin: 5px 0;
-}
-
+/* Iconos Sociales */
 .social-icons img {
-    width: 24px;
+    width: 30px;
     margin: 0 5px;
     cursor: pointer;
-    transition: transform 0.3s;
 }
 
-.social-icons img:hover {
-    transform: scale(1.2);
+/* Formulario de Contacto */
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Resultado de Conversión */
+#result {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Ajustes Extra */
+.fade-in {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.container {
+    padding: 20px;
+    text-align: center;
+}
+
+.converter {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-width: 500px;
+}
+
+.converter-group {
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Mejora visual del filtro Select2 */
+.select2-container .select2-selection--single {
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 30px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 34px;
+    right: 10px;
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -70px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Estilo para el Historial de Conversiones */
+#history {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+#history th, #history td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+#history th {
+    background-color: #007bff;
+    color: white;
+}
+
+#history tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#history tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Contador de Conversiones */
+#conversionCount {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #007bff;
+}
+
+/* Ajustes para la Tabla en Modo Oscuro */
+.dark-mode #history th {
+    background-color: #343a40;
+}
+
+.dark-mode #history tr:nth-child(even) {
+    background-color: #1e1e1e;
+}
+
+.dark-mode #history tr:hover {
+    background-color: #495057;
+}
+
+.dark-mode #conversionCount {
+    color: #17a2b8;
+}
+
+/* Efecto Hover en Botones de Navegación */
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #0056b3;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Ajustes para Tabla de Historial */
+#history {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+#history th, #history td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+#history th {
+    background-color: #007bff;
+    color: white;
+}
+
+#history tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#history tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Modo Oscuro para Historial */
+.dark-mode #history th {
+    background-color: #343a40;
+}
+
+.dark-mode #history tr:nth-child(even) {
+    background-color: #1e1e1e;
+}
+
+.dark-mode #history tr:hover {
+    background-color: #495057;
+}
+
+/* Contador de Conversiones */
+#conversionCount {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #007bff;
+}
+
+.dark-mode #conversionCount {
+    color: #17a2b8;
+}
+
+
+/* Ajustes para el Pie de Página */
+footer {
+    text-align: center;
+    padding: 5px 0;
+    font-size: 0.9rem;
+}
+
+/* Recuadro para 'Sobre Nosotros' y 'Contáctanos' */
+.section-container {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #ffffff;
+}
+
+.dark-mode .section-container {
+    background-color: #1e1e1e;
+    border-color: #444;
+}
+
+
+
+
+
 
